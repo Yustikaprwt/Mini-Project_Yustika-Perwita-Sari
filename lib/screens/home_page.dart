@@ -1,11 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_project/apis/blush_on_api.dart';
+import 'package:mini_project/apis/eye_shadow.dart';
+import 'package:mini_project/apis/foundation_api.dart';
+import 'package:mini_project/apis/lipstick_api.dart';
+import 'package:mini_project/apis/nail_polish_api.dart';
 
 class HomePage extends StatelessWidget {
   final String username;
 
-  const HomePage({required this.username});
+  const HomePage({required this.username, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +44,25 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  imageCard('lib/assets/foundation.jpg', 'Foundation'),
+                  imageCard(context, 'lib/assets/foundation.jpg', 'Foundation',
+                      const FoundationApi()),
                   const SizedBox(
                     height: 5,
                   ),
-                  imageCard('lib/assets/blush_on.jpg', 'Blush On'),
+                  imageCard(context, 'lib/assets/blush_on.jpg', 'Blush On',
+                      const BlushOnApi()),
                   const SizedBox(
                     height: 5,
                   ),
-                  imageCard('lib/assets/lipstick.jpg', 'Lipstick'),
+                  imageCard(context, 'lib/assets/lipstick.jpg', 'Lipstick',
+                      const LipstickApi()),
                   const SizedBox(
                     height: 5,
                   ),
-                  imageCard('lib/assets/nail_polish.jpg', 'Nail Polish'),
+                  imageCard(context, 'lib/assets/nail_polish.jpg',
+                      'Nail Polish', const NailPolishApi()),
+                  imageCard(context, 'lib/assets/eyeshadow.jpg', 'Eye Shadow',
+                      const EyeShadowApi())
                 ],
               ),
             ),
@@ -73,29 +84,35 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget imageCard(String imagePath, String title) => Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Ink.image(
-              image: AssetImage(imagePath),
-              height: 180,
-              fit: BoxFit.cover,
-              child: InkWell(
-                onTap: () {},
+  Widget imageCard(BuildContext context, String imagePath, String title,
+          Widget destinationPage) =>
+      GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => destinationPage));
+        },
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Ink.image(
+                image: AssetImage(imagePath),
+                height: 180,
+                fit: BoxFit.cover,
               ),
-            ),
-            Text(
-              title,
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 24,
+              Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }
