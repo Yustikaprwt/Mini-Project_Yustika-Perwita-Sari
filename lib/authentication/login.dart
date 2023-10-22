@@ -27,7 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response == true) {
       if (!mounted) return;
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    username: username.text,
+                  )));
     } else {
       setState(() {
         isLoginTrue = true;
