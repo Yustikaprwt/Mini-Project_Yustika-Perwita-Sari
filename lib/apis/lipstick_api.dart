@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_project/apis/detail_lipstick_api.dart';
 
 class LipstickApi extends StatefulWidget {
   const LipstickApi({Key? key}) : super(key: key);
 
   @override
   State<LipstickApi> createState() => _LipstickApiState();
+}
+
+void navigateToProductDetail(
+    BuildContext context, Map<String, dynamic> product) {
+  Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) => DetailLipstick(product: product),
+  ));
 }
 
 class _LipstickApiState extends State<LipstickApi> {
@@ -78,82 +86,93 @@ class _LipstickApiState extends State<LipstickApi> {
   }
 
   Widget apiCard(BuildContext context, Map<String, dynamic> item) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Container(
-                width: 180,
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 3,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 120,
-                        width: double.infinity,
-                        child: Image.network(item['image_link']),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 7,
-                            ),
-                            Text(
-                              '${item['name']}',
-                              style: GoogleFonts.poppins(
+    return GestureDetector(
+      onTap: () {
+        navigateToProductDetail(context, item);
+      },
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Container(
+                  width: 180,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 120,
+                          width: double.infinity,
+                          child: GestureDetector(
+                            onTap: () {
+                              navigateToProductDetail(context, item);
+                            },
+                            child: Image.network(item['image_link']),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              Text(
+                                '${item['name']}',
+                                style: GoogleFonts.poppins(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
-                                  color: const Color(0xffEE6BCC)),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'Brand: ${item['brand']}',
-                              style: GoogleFonts.poppins(fontSize: 13),
-                            ),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.attach_money,
-                                  size: 15,
+                                  color: const Color(0xffEE6BCC),
                                 ),
-                                Text(
-                                  '${item['price']}',
-                                  style: GoogleFonts.poppins(fontSize: 13),
-                                ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Brand: ${item['brand']}',
+                                style: GoogleFonts.poppins(fontSize: 13),
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    size: 15,
+                                  ),
+                                  Text(
+                                    '${item['price']}',
+                                    style: GoogleFonts.poppins(fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

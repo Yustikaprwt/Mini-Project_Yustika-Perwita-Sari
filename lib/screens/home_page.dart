@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/apis/blush_on_api.dart';
@@ -6,12 +5,18 @@ import 'package:mini_project/apis/eye_shadow.dart';
 import 'package:mini_project/apis/foundation_api.dart';
 import 'package:mini_project/apis/lipstick_api.dart';
 import 'package:mini_project/apis/nail_polish_api.dart';
+import 'package:mini_project/components/navigation_bar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String username;
 
   const HomePage({required this.username, Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +32,7 @@ class HomePage extends StatelessWidget {
                     height: 50,
                   ),
                   Text(
-                    'Hello, $username',
+                    'Hello, ${widget.username}',
                     style: GoogleFonts.poppins(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
@@ -69,18 +74,17 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: const Color(0xffEE6BCC),
-        animationDuration: const Duration(milliseconds: 200),
-        items: [
-          const Icon(
-            Icons.home,
-            color: Color(0xffEE6BCC),
-          ),
-          const Icon(Icons.favorite, color: Color(0xffEE6BCC)),
-          const Icon(Icons.person, color: Color(0xffEE6BCC)),
-        ],
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+          selectedIndex: 0,
+          onItemTapped: (index) {
+            if (index == 1) {
+              Navigator.pushNamed(context, '/favorite');
+            } else if (index == 2) {
+              Navigator.pushNamed(context, '/chat');
+            } else if (index == 3) {
+              Navigator.pushNamed(context, '/profile');
+            }
+          }),
     );
   }
 
