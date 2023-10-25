@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mini_project/authentication/login.dart';
 import 'package:mini_project/authentication/register.dart';
+import 'package:mini_project/authentication/authentication_service.dart';
 import 'package:mini_project/screens/chat_recommendation.dart';
 import 'package:mini_project/screens/favorite_screen.dart';
 import 'package:mini_project/screens/home_page.dart';
 import 'package:mini_project/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -16,7 +18,14 @@ void main() {
     systemNavigationBarIconBrightness: Brightness.dark,
     statusBarIconBrightness: Brightness.dark,
   ));
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AuthenticationService>(
+        create: (context) => AuthenticationService(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

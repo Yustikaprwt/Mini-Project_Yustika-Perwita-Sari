@@ -6,6 +6,8 @@ import 'package:mini_project/apis/foundation_api.dart';
 import 'package:mini_project/apis/lipstick_api.dart';
 import 'package:mini_project/apis/nail_polish_api.dart';
 import 'package:mini_project/components/navigation_bar.dart';
+import 'package:mini_project/authentication/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final String username;
@@ -19,6 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final authService = context.read<AuthenticationService>();
+    final user = authService.user;
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                     height: 50,
                   ),
                   Text(
-                    'Hello, ${widget.username}',
+                    'Hello, ${user?.usrName ?? widget.username}',
                     style: GoogleFonts.poppins(
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
