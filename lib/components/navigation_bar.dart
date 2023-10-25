@@ -7,6 +7,33 @@ class CustomBottomNavigationBar extends StatelessWidget {
   CustomBottomNavigationBar(
       {required this.selectedIndex, required this.onItemTapped});
 
+  Widget _buildIcon(IconData icon, String label, bool isSelected) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: isSelected ? const Color(0xffEE6BCC) : Colors.white,
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(10),
+          child: Icon(
+            icon,
+            color: isSelected ? Colors.white : const Color(0xffEE6BCC),
+          ),
+        ),
+        if (isSelected)
+          Text(
+            label,
+            style: const TextStyle(
+              color: Color(0xffEE6BCC),
+            ),
+          ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -15,26 +42,29 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onItemTapped(index);
       },
       items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
+        BottomNavigationBarItem(
+          icon: _buildIcon(Icons.home, 'Home', selectedIndex == 0),
           label: 'Home',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
+        BottomNavigationBarItem(
+          icon: _buildIcon(Icons.favorite, 'Favorite', selectedIndex == 1),
           label: 'Favorite',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.chat_outlined),
+        BottomNavigationBarItem(
+          icon: _buildIcon(Icons.chat_outlined, 'Chat AI', selectedIndex == 2),
           label: 'Chat AI',
         ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.person),
+        BottomNavigationBarItem(
+          icon: _buildIcon(Icons.person, 'Profile', selectedIndex == 3),
           label: 'Profile',
         ),
       ],
       type: BottomNavigationBarType.fixed,
-      showSelectedLabels: true,
+      showSelectedLabels: false,
       showUnselectedLabels: false,
+      backgroundColor: Colors.white,
+      selectedItemColor: const Color(0xffEE6BCC),
+      unselectedItemColor: const Color(0xffEE6BCC),
     );
   }
 }
