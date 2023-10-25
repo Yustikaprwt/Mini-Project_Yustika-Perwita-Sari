@@ -34,4 +34,14 @@ class DatabaseHelper {
 
     return db.insert('users', userModel.toMap());
   }
+
+  Future<int> updateAccount(
+      int usrId, String newUsername, String newPassword) async {
+    final Database db = await initDB();
+
+    return db.rawUpdate(
+      'UPDATE users SET usrName = ?, usrPassword = ? WHERE usrId = ?',
+      [newUsername, newPassword, usrId],
+    );
+  }
 }

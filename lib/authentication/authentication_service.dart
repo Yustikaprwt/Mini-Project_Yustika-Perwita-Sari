@@ -17,6 +17,11 @@ class AuthenticationService extends ChangeNotifier {
     }
   }
 
+  void setUser(UserModel newUser) {
+    _user = newUser;
+    notifyListeners();
+  }
+
   void logout() {
     _user = null;
   }
