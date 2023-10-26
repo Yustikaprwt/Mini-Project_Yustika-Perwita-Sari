@@ -80,9 +80,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit Profile',
-          style: GoogleFonts.poppins(fontSize: 23, fontWeight: FontWeight.w500),
+          '˚·.˚ Edit Profile ˚.·˚',
+          style: GoogleFonts.poppins(
+              fontSize: 23,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xffEE6BCC)),
         ),
+        centerTitle: true,
         automaticallyImplyLeading: false,
         actions: [
           PopupMenuButton(

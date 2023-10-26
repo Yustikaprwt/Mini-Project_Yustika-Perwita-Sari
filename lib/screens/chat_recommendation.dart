@@ -27,10 +27,10 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Makeup recommendation',
+          '˚·.˚ Makeup Recommendation ˚.·˚',
           style: GoogleFonts.poppins(
               fontSize: 23,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.bold,
               color: const Color(0xffEE6BCC)),
         ),
         automaticallyImplyLeading: false,
