@@ -4,7 +4,7 @@ import 'package:mini_project/components/navigation_bar.dart';
 import 'package:mini_project/helper/database_helper.dart';
 import 'package:mini_project/models/user_model.dart';
 import 'package:provider/provider.dart';
-import 'package:mini_project/authentication/authentication_service.dart';
+import 'package:mini_project/providers/authentication_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String username;

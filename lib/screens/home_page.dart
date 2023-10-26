@@ -6,7 +6,7 @@ import 'package:mini_project/apis/foundation_api.dart';
 import 'package:mini_project/apis/lipstick_api.dart';
 import 'package:mini_project/apis/nail_polish_api.dart';
 import 'package:mini_project/components/navigation_bar.dart';
-import 'package:mini_project/authentication/authentication_service.dart';
+import 'package:mini_project/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mini_project/authentication/login.dart';
 import 'package:mini_project/authentication/register.dart';
-import 'package:mini_project/authentication/authentication_service.dart';
+import 'package:mini_project/providers/authentication_service.dart';
+import 'package:mini_project/providers/makeup_provider.dart';
 import 'package:mini_project/screens/chat_recommendation.dart';
 import 'package:mini_project/screens/favorite_screen.dart';
 import 'package:mini_project/screens/home_page.dart';
@@ -22,6 +23,9 @@ void main() {
     providers: [
       ChangeNotifierProvider<AuthenticationService>(
         create: (context) => AuthenticationService(),
+      ),
+      ChangeNotifierProvider<MakeupRecommendationProvider>(
+        create: (context) => MakeupRecommendationProvider(),
       ),
     ],
     child: const MyApp(),

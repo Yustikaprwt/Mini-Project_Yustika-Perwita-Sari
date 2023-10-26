@@ -4,7 +4,7 @@ import 'package:mini_project/authentication/register.dart';
 import 'package:mini_project/models/user_model.dart';
 import 'package:mini_project/helper/database_helper.dart';
 import 'package:mini_project/screens/home_page.dart';
-import 'package:mini_project/authentication/authentication_service.dart';
+import 'package:mini_project/providers/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
