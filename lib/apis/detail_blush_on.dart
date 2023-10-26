@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mini_project/components/navigation_bar.dart';
+import 'package:mini_project/models/favorite_product_model.dart';
+import 'package:mini_project/providers/favorite_provider.dart';
+import 'package:provider/provider.dart';
 
 class DetailBlushOn extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -13,17 +17,37 @@ class DetailBlushOn extends StatefulWidget {
 class _DetailBlushOnState extends State<DetailBlushOn> {
   bool isFavorite = false;
 
+  void addToFavorites() {
+    final favoriteProvider =
+        Provider.of<FavoriteProvider>(context, listen: false);
+    final favoriteProduct = FavoriteProduct(
+      id: widget.product['id'].toString(),
+      name: widget.product['name'],
+      description: widget.product['description'],
+      price: double.parse(widget.product['price']),
+      imageLink: widget.product['image_link'],
+    );
+
+    if (isFavorite) {
+      favoriteProvider.removeFavoriteProduct(favoriteProduct);
+      print('Removed from favorites: ${favoriteProduct.name}');
+    } else {
+      favoriteProvider.addFavoriteProduct(favoriteProduct);
+      print('Added to favorites: ${favoriteProduct.name}');
+    }
+
+    setState(() {
+      isFavorite = !isFavorite;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            onPressed: () {
-              setState(() {
-                isFavorite = !isFavorite;
-              });
-            },
+            onPressed: addToFavorites,
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite ? Colors.red : null,
@@ -93,6 +117,18 @@ class _DetailBlushOnState extends State<DetailBlushOn> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: 0,
+        onItemTapped: (index) {
+          if (index == 1) {
+            Navigator.pushNamed(context, '/favorite');
+          } else if (index == 2) {
+            Navigator.pushNamed(context, '/chat');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/profile');
+          }
+        },
       ),
     );
   }

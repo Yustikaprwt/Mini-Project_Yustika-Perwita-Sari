@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mini_project/authentication/login.dart';
 import 'package:mini_project/authentication/register.dart';
 import 'package:mini_project/providers/authentication_service.dart';
+import 'package:mini_project/providers/favorite_provider.dart';
 import 'package:mini_project/providers/makeup_provider.dart';
 import 'package:mini_project/screens/chat_recommendation.dart';
 import 'package:mini_project/screens/favorite_screen.dart';
@@ -26,6 +27,9 @@ void main() {
       ),
       ChangeNotifierProvider<MakeupRecommendationProvider>(
         create: (context) => MakeupRecommendationProvider(),
+      ),
+      ChangeNotifierProvider<FavoriteProvider>(
+        create: (context) => FavoriteProvider(),
       ),
     ],
     child: const MyApp(),
