@@ -14,11 +14,14 @@ class ChatRecommendation extends StatefulWidget {
 
 class _ChatRecommendationState extends State<ChatRecommendation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _skinTypeController = TextEditingController();
-  final TextEditingController _skinColorContoller = TextEditingController();
   final TextEditingController _budgetController = TextEditingController();
-
   bool isLoading = false;
+
+  List<String> skinTypeOptions = ['Normal', 'Oily', 'Dry', 'Combination'];
+  List<String> skinColorOptions = ['Neutral', 'Medium', 'Warm', 'Olive'];
+
+  String? selectedSkinType;
+  String? selectedSkinColor;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +32,10 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
         title: Text(
           '˚·.˚ Makeup Recommendation ˚.·˚',
           style: GoogleFonts.poppins(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xffEE6BCC)),
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xffEE6BCC),
+          ),
         ),
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -43,60 +47,56 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Center(
                 child: Image(
                   image: AssetImage('lib/assets/chat.png'),
                   height: 270,
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.all(13.0),
-                child: TextFormField(
-                  controller: _skinTypeController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffEED7F9),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    labelText: 'Skin Type',
-                    hintText: 'Enter the skin type',
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Please enter your skin type';
-                    }
-                    return null;
+                child: DropdownButtonFormField<String>(
+                  value: selectedSkinType,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSkinType = newValue;
+                    });
                   },
+                  items: skinTypeOptions.map((String skinType) {
+                    return DropdownMenuItem<String>(
+                      value: skinType,
+                      child: Text(skinType),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xffEED7F9),
+                    labelText: 'Skin Type',
+                  ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(13.0),
-                child: TextFormField(
-                  controller: _skinColorContoller,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffEED7F9),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide.none,
-                    ),
-                    labelText: 'Skin Color',
-                    hintText: 'Enter the skin color',
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return 'Please enter your skin color';
-                    }
-                    return null;
+                child: DropdownButtonFormField<String>(
+                  value: selectedSkinColor,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedSkinColor = newValue;
+                    });
                   },
+                  items: skinColorOptions.map((String skinColor) {
+                    return DropdownMenuItem<String>(
+                      value: skinColor,
+                      child: Text(skinColor),
+                    );
+                  }).toList(),
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Color(0xffEED7F9),
+                    labelText: 'Skin Color',
+                  ),
                 ),
               ),
               Padding(
@@ -140,8 +140,8 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
                               isLoading = true;
                             });
                             await recommendationProvider.getRecommendations(
-                              skinTypes: _skinTypeController.text,
-                              skinColors: _skinColorContoller.text,
+                              skinTypes: selectedSkinType ?? '',
+                              skinColors: selectedSkinColor ?? '',
                               budgets: _budgetController.text,
                             );
 
@@ -150,8 +150,9 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return RecommendationScreen(
-                                        responseData: recommendationProvider
-                                            .recommendation!);
+                                      responseData: recommendationProvider
+                                          .recommendation!,
+                                    );
                                   },
                                 ),
                               );
@@ -175,22 +176,23 @@ class _ChatRecommendationState extends State<ChatRecommendation> {
                           ),
                         ),
                       ),
-              ),
+              )
             ],
           ),
         ),
       ),
       bottomNavigationBar: CustomBottomNavigationBar(
-          selectedIndex: 2,
-          onItemTapped: (index) {
-            if (index == 0) {
-              Navigator.pushNamed(context, '/home');
-            } else if (index == 1) {
-              Navigator.pushNamed(context, '/favorite');
-            } else if (index == 3) {
-              Navigator.pushNamed(context, '/profile');
-            }
-          }),
+        selectedIndex: 2,
+        onItemTapped: (index) {
+          if (index == 0) {
+            Navigator.pushNamed(context, '/home');
+          } else if (index == 1) {
+            Navigator.pushNamed(context, '/favorite');
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/profile');
+          }
+        },
+      ),
     );
   }
 }

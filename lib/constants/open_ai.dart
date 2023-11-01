@@ -1,3 +1,3 @@
-import 'package:mini_project/constants/api_key.dart';
+import 'package:mini_project/env/env.dart';
 
-String apiKey = ApiKey.openaiApiKey;
+String apiKey = Env.apiKey;

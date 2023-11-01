@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mini_project/env/env.dart';
 
 class MakeUpRecommendationService {
   final Dio _dio = Dio();
@@ -12,8 +13,7 @@ class MakeUpRecommendationService {
       _dio.options = BaseOptions(
         baseUrl: 'https://api.openai.com/v1/chat/',
         headers: {
-          'Authorization':
-              'Bearer',
+          'Authorization': 'Bearer ${Env.apiKey}',
         },
       );
 
@@ -23,7 +23,7 @@ class MakeUpRecommendationService {
           {
             "role": "system",
             "content":
-                "Berikan saya 3 rekomendasi makeup dengan tipe kulit $skinType dan warna kulit $skinColor, berikan saya rekomendasi berdasarkan budget yang saya miliki $budget, berikan juga deskripsi produk beserta harganya"
+                "Berikan saya 3 rekomendasi makeup dengan tipe kulit $skinType dan warna kulit $skinColor, berikan saya rekomendasi berdasarkan budget yang saya miliki $budget"
           },
         ]
       });
