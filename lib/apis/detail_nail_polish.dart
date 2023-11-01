@@ -41,13 +41,50 @@ class _DetailNailPolishState extends State<DetailNailPolish> {
     });
   }
 
+  Future<void> _showFavoriteConfirmationDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isFavorite ? 'Remove from Favorites' : 'Add to Favorites',
+              style: const TextStyle(
+                  color: Color(0xffEE6BCC), fontWeight: FontWeight.bold)),
+          content: Text(
+              'Do you want to ${isFavorite ? 'remove' : 'add'} this product to your favorites?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Color(0xffEE6BCC)),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                addToFavorites();
+              },
+              child: const Text('Confirm',
+                  style: TextStyle(color: Color(0xffEE6BCC))),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            onPressed: addToFavorites,
+            onPressed: () {
+              _showFavoriteConfirmationDialog(context);
+            },
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite ? Colors.red : null,

@@ -12,7 +12,8 @@ class MakeUpRecommendationService {
       _dio.options = BaseOptions(
         baseUrl: 'https://api.openai.com/v1/chat/',
         headers: {
-          'Authorization': 'Bearer ',
+          'Authorization':
+              'Bearer',
         },
       );
 
@@ -30,7 +31,9 @@ class MakeUpRecommendationService {
       if (response.statusCode == 200) {
         return response.data;
       }
-    } catch (error) {}
+    } catch (error) {
+      print('Error: $error');
+    }
     return null;
   }
 }

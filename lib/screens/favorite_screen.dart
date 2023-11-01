@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mini_project/components/navigation_bar.dart';
+import 'package:mini_project/models/favorite_product_model.dart';
 import 'package:provider/provider.dart';
 import 'package:mini_project/providers/favorite_provider.dart';
 
@@ -12,6 +13,41 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  Future<void> _showRemoveConfirmationDialog(
+      BuildContext context, FavoriteProduct product) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Remove from Favorites'),
+          content: const Text(
+              'Are you sure you want to remove this product from your favorites?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                removeFavorite(product);
+              },
+              child: const Text('Confirm'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void removeFavorite(FavoriteProduct product) {
+    final favoriteProvider =
+        Provider.of<FavoriteProvider>(context, listen: false);
+    favoriteProvider.removeFavoriteProduct(product);
+  }
+
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
@@ -91,12 +127,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                               ),
                             ),
                             IconButton(
-                              icon: const Icon(Icons.favorite,
-                                  color: Color.fromARGB(255, 200, 16, 3)),
                               onPressed: () {
-                                favoriteProvider
-                                    .removeFavoriteProduct(favoriteProduct);
+                                _showRemoveConfirmationDialog(
+                                  context,
+                                  favoriteProduct,
+                                );
                               },
+                              icon: const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              ),
                             ),
                           ],
                         ),
