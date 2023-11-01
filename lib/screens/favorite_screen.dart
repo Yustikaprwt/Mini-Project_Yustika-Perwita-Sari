@@ -19,7 +19,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Remove from Favorites'),
+          title: const Text(
+            'Remove from Favorites',
+            style: TextStyle(
+                color: Color(0xffEE6BCC), fontWeight: FontWeight.bold),
+          ),
           content: const Text(
               'Are you sure you want to remove this product from your favorites?'),
           actions: <Widget>[
@@ -27,14 +31,20 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Color(0xffEE6BCC)),
+              ),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 removeFavorite(product);
               },
-              child: const Text('Confirm'),
+              child: const Text(
+                'Confirm',
+                style: TextStyle(color: Color(0xffEE6BCC)),
+              ),
             ),
           ],
         );

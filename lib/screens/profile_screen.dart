@@ -98,12 +98,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     title: const Text('Logout',
                         style: TextStyle(color: Colors.pink)),
                     onTap: () {
-                      final authService = context.read<AuthenticationService>();
-                      authService.logout();
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        '/',
-                        (route) => false,
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text(
+                              'Logout',
+                              style: TextStyle(color: Color(0xffEE6BCC)),
+                            ),
+                            content:
+                                const Text('Are you sure you want to logout?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Cancel',
+                                  style: TextStyle(color: Color(0xffEE6BCC)),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  final authService =
+                                      context.read<AuthenticationService>();
+                                  authService.logout();
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/',
+                                    (route) => false,
+                                  );
+                                },
+                                child: const Text('Logout'),
+                              ),
+                            ],
+                          );
+                        },
                       );
                     },
                   ),
